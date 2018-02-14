@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "426405697865",
+    "firebase_url": "https://salle-library.firebaseio.com",
+    "project_id": "salle-library",
+    "storage_bucket": "salle-library.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426405697865:android:1a7eee76f61f3028",
+        "android_client_info": {
+          "package_name": "com.example.bertiwi.readiswhatilove"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426405697865-bp0sv54ghrigikmt078j00248n4aa9d5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.bertiwi.readiswhatilove",
+            "certificate_hash": "839d0c9532a44941f1e3ffaa5a58b64dd4db50ba"
+          }
+        },
+        {
+          "client_id": "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBmRqulqH6zM85RZBBFtwFbRxf8odfeRo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

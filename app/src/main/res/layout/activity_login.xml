@@ -1,14 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_layout_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bertiwi.readiswhatilove.Authentication.SignUpFragment">
+    tools:context="com.example.bertiwi.readiswhatilove.Authentication.LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -21,12 +22,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="70dp"
-                android:text="Ridu is laifu"
+                android:text="Ridu is raifu"
                 android:textSize="20sp" />
 
 
             <EditText
-                android:id="@+id/et_register_email"
+                android:id="@+id/et_login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -40,7 +41,7 @@
                 android:padding="10dp" />
 
             <EditText
-                android:id="@+id/et_register_password"
+                android:id="@+id/et_login_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -53,21 +54,48 @@
                 android:inputType="textPassword"
                 android:padding="10dp" />
 
-            <Button
-                android:id="@+id/bt_register_crear_cuenta"
+            <TextView
+                android:id="@+id/login_forgotten_pass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/has_olvidado_la_contrase_a" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="35dp"
+                android:layout_marginStart="35dp"
+                android:layout_marginTop="40dp" />
+
+            <ProgressBar
+                android:id="@+id/login_progresbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="64dp"
+                android:visibility="gone" />
+
+            <!--<Button
+                android:id="@+id/bt_login_iniciar_sesion"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginStart="35dp"
                 android:layout_marginTop="40dp"
                 android:background="#7C4DFF"
                 android:outlineProvider="bounds"
-                android:text="@string/crear_cuenta"
-                android:textColor="#fff" />
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/iniciar_sesi_n"
+                android:textColor="#fff" />-->
 
 
         </LinearLayout>
     </ScrollView>
-
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

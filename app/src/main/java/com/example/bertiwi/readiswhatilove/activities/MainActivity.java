@@ -18,7 +18,7 @@ import com.viven.fragmentstatemanager.FragmentStateManager;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    private BottomNavigationView bottomNavigationView;
     private FragmentStateManager mFragmentStateManager;
 
     @Override

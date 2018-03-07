@@ -10,17 +10,22 @@ import java.sql.Date;
  */
 
 public class Book implements Parcelable{
-    private int id;
+    private String id;
     private String title;
+    private String author;
     private String publisher;
     private String publishedDate;
     private String description;
     private Double averageRating;
     private String image;
 
-    public Book(int id, String title, String publisher, String publishedDate, String description, Double averageRating, String image) {
+    public Book() {
+    }
+
+    public Book(String id, String title, String author, String publisher, String publishedDate, String description, Double averageRating, String image) {
         this.id = id;
         this.title = title;
+        this.author = author;
         this.publisher = publisher;
         this.publishedDate = publishedDate;
         this.description = description;
@@ -29,8 +34,9 @@ public class Book implements Parcelable{
     }
 
     protected Book(Parcel in) {
-        id = in.readInt();
+        id = in.readString();
         title = in.readString();
+        author = in.readString();
         publisher = in.readString();
         publishedDate = in.readString();
         description = in.readString();
@@ -54,11 +60,11 @@ public class Book implements Parcelable{
         }
     };
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -68,6 +74,14 @@ public class Book implements Parcelable{
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getPublisher() {
@@ -117,8 +131,9 @@ public class Book implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
+        dest.writeString(id);
         dest.writeString(title);
+        dest.writeString(author);
         dest.writeString(publisher);
         dest.writeString(publishedDate);
         dest.writeString(description);

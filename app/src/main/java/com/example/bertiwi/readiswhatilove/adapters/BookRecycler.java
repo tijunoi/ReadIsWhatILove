@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,9 +22,19 @@ import java.util.ArrayList;
 public class BookRecycler extends RecyclerView.Adapter<BookRecycler.BookViewHolder> {
 
     private ArrayList<Book> datos;
+    private Context context;
+    private final BookRecycler.OnItemClickListener listener;
+    private ArrayList<Book> listBookOrigin;
 
-    public BookRecycler(ArrayList<Book> datos) {
+    public interface OnItemClickListener {
+        void onItemClick(Book book);
+    }
+    public BookRecycler(ArrayList<Book> datos, Context context, OnItemClickListener listener) {
         this.datos = datos;
+        this.context = context;
+        this.listener = listener;
+        this.listBookOrigin = new ArrayList<>();
+        listBookOrigin.addAll(datos);
     }
 
     public class BookViewHolder extends RecyclerView.ViewHolder{
@@ -38,12 +49,18 @@ public class BookRecycler extends RecyclerView.Adapter<BookRecycler.BookViewHold
             autor = itemView.findViewById(R.id.autor_book_profile);
         }
 
-        public void bindBook(Book book){
-            Picasso.with(image.getContext())
+        public void bindBook(final Book book, Context context, final BookRecycler.OnItemClickListener listener){
+            Picasso.with(context)
                     .load(book.getImage())
                     .into(image);
             title.setText(book.getTitle());
             autor.setText(book.getAuthor());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(book);
+                }
+            });
         }
     }
 
@@ -59,11 +76,29 @@ public class BookRecycler extends RecyclerView.Adapter<BookRecycler.BookViewHold
     public void onBindViewHolder(BookRecycler.BookViewHolder holder, int position) {
         Book item = datos.get(position);
 
-        holder.bindBook(item);
+        holder.bindBook(item, context, listener);
     }
 
     @Override
     public int getItemCount() {
         return datos.size();
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase();
+        datos.clear();
+        if (charText.length() == 0) {
+            datos.addAll(listBookOrigin);
+        } else {
+            for (Book book : listBookOrigin) {
+                if (book.getTitle().toLowerCase().contains(charText)) {
+                    datos.add(book);
+                }
+                if (book.getAuthor().toLowerCase().contains(charText)){
+                    datos.add(book);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

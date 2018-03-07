@@ -3,11 +3,15 @@ package com.example.bertiwi.readiswhatilove.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -16,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.adapters.BookRecycler;
 import com.example.bertiwi.readiswhatilove.model.Book;
+import com.example.bertiwi.readiswhatilove.utilities.SimpleDividerItemDecoration;
 import com.example.bertiwi.readiswhatilove.utilities.VolleySingleton;
 import com.github.ybq.android.spinkit.SpinKitView;
 
@@ -30,7 +35,7 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private static String VOLUMES_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private android.widget.SearchView mSearchView;
@@ -39,6 +44,8 @@ public class SearchFragment extends Fragment {
     private ArrayList<Book> bookArrayList = new ArrayList<>();
 
     private BookRecycler adapter;
+
+    private String finalQuery;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -55,8 +62,24 @@ public class SearchFragment extends Fragment {
         spinKitView = v.findViewById(R.id.spin_kit_buscarLibros);
         recyclerView = v.findViewById(R.id.recV_Libros);
 
-        adapter = new BookRecycler(bookArrayList);
+        mSearchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSearchView.setIconified(false);
+            }
+        });
+        mSearchView.setQueryHint("Buscar libro");
+        mSearchView.setOnQueryTextListener(this);
 
+        adapter = new BookRecycler(bookArrayList, getContext(), new BookRecycler.OnItemClickListener() {
+            @Override
+            public void onItemClick(Book book) {
+                Toast.makeText(getContext(), "Book clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
 
         return v;
@@ -85,10 +108,9 @@ public class SearchFragment extends Fragment {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<>();
-                params.put("q", "q");
+                params.put("q", finalQuery);
                 params.put("maxResults", "10");
                 params.put("printType", "books");
-
                 return params;
             }
         };
@@ -138,4 +160,20 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        finalQuery=query;
+        if (!finalQuery.isEmpty()){
+            getVolumes();
+        }else {
+            Toast.makeText(getContext(), "ESTO NO VA COÑO", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapter.filter(newText);
+        return false;
+    }
 }

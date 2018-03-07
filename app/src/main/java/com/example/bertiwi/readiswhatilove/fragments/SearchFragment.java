@@ -76,11 +76,18 @@ public class SearchFragment extends Fragment {
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<>();
                 params.put("q", "q");
+                params.put("maxResults", "10");
+                params.put("printType", "books");
+
                 return params;
             }
         };
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest1);
+
+    }
+
+    public void parseVolumnes(String response){
 
     }
 

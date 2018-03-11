@@ -2,17 +2,15 @@ package com.example.bertiwi.readiswhatilove.activities;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.fragments.HomeFragment;
 import com.example.bertiwi.readiswhatilove.fragments.SearchFragment;
-import com.example.bertiwi.readiswhatilove.fragments.SettingsFragment;
+import com.example.bertiwi.readiswhatilove.fragments.ProfileFragment;
 import com.example.bertiwi.readiswhatilove.fragments.StarredFragment;
 import com.viven.fragmentstatemanager.FragmentStateManager;
 
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                                 fragmentTransaction = true;
                                 break;
                             case R.id.action_settings:
-                                selectedFragment = new SettingsFragment();
+                                selectedFragment = new ProfileFragment();
                                 fragmentTransaction = true;
                                 break;
                         }

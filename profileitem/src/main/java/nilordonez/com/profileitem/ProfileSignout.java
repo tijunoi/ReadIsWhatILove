@@ -14,9 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * TODO: document your custom view class.
- */
+
 public class ProfileSignout extends ConstraintLayout implements View.OnClickListener {
 
     private String mUserEmailStr;
@@ -91,6 +89,7 @@ public class ProfileSignout extends ConstraintLayout implements View.OnClickList
      */
     public void setUserEmail(String userEmail) {
         mUserEmailStr = userEmail;
+        setUserEmail();
     }
 
     @Override

@@ -18,50 +18,11 @@
             android:padding="16dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="70dp"
-                android:text="Ridu is raifu"
-                android:textSize="20sp" />
-
-
-            <EditText
-                android:id="@+id/et_login_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="70dp"
-                android:alpha="0.5"
-                android:background="@drawable/editext_login_border_cuadrat"
-                android:gravity="center_horizontal"
-                android:hint="@string/direcci_n_de_correo_electr_nico"
-                android:inputType="textEmailAddress"
-                android:padding="10dp" />
-
-            <EditText
-                android:id="@+id/et_login_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:alpha="0.5"
-                android:background="@drawable/editext_login_border_cuadrat"
-                android:gravity="center_horizontal"
-                android:hint="@string/constrase_a"
-                android:inputType="textPassword"
-                android:padding="10dp" />
-
-            <TextView
-                android:id="@+id/login_forgotten_pass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/has_olvidado_la_contrase_a" />
+                android:text="Bienvenido a Read Is What I Love! \n Para continuar, necesitamos acceso a tu cuenta de Google. Pulsa el botón de abajo para empezar a explorar libros."
+                android:textAlignment="center"
+                android:layout_marginBottom="70dp"/>
 
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/sign_in_button"
@@ -72,6 +33,13 @@
                 android:layout_marginStart="35dp"
                 android:layout_marginTop="40dp" />
 
+            <TextView
+                android:layout_marginTop="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read Is What I Love utiliza tu cuenta de Google para guardar tus libros favoritos."
+                android:textAlignment="center" />
+
             <ProgressBar
                 android:id="@+id/login_progresbar"
                 android:layout_width="wrap_content"
@@ -79,21 +47,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="64dp"
                 android:visibility="gone" />
-
-            <!--<Button
-                android:id="@+id/bt_login_iniciar_sesion"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginEnd="35dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginTop="40dp"
-                android:background="#7C4DFF"
-                android:outlineProvider="bounds"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@string/iniciar_sesi_n"
-                android:textColor="#fff" />-->
 
 
         </LinearLayout>

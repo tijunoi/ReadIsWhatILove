@@ -1,5 +1,6 @@
 package com.example.bertiwi.readiswhatilove.adapters;
 
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -11,9 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.bertiwi.readiswhatilove.R;
+import com.example.bertiwi.readiswhatilove.activities.BookProfileActivity;
 import com.example.bertiwi.readiswhatilove.model.Book;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import static com.example.bertiwi.readiswhatilove.fragments.SearchFragment.SELECTED_BOOK;
 
 /**
  * BookAdapter para el HomeFragment
@@ -61,13 +66,24 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewholder
             mAuthorTextView = itemView.findViewById(R.id.book_author_textview);
         }
 
-        public void bindData(Book book){
+        public void bindData(final Book book){
             //TODO: bindear datos a la view
             //TODO: load image
             mTitleTextView.setText(book.getTitle());
             mAuthorTextView.setText(book.getAuthor());
+            Picasso.with(mCoverImageView.getContext())
+                    .load(book.getImage())
+                    .into(mCoverImageView);
 
-            //TODO: falta la imatge, fer quan Berta actualitzi model
+            mCardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mCardView.getContext(), BookProfileActivity.class);
+                    intent.putExtra(SELECTED_BOOK,book);
+                    mCardView.getContext().startActivity(intent);
+                }
+            });
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 mCoverImageView.setBackgroundColor(mCardView.getContext().getColor(R.color.colorAccent));
             } else {

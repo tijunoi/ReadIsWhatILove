@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.example.bertiwi.readiswhatilove.BuildConfig;
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.activities.SplashScreenActivity;
 import com.example.bertiwi.readiswhatilove.utilities.SharedPrefManager;

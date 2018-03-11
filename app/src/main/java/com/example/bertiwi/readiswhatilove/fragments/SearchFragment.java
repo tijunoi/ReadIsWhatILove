@@ -37,7 +37,7 @@ import okhttp3.Response;
  */
 public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    private static String VOLUMES_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+    public static String VOLUMES_URL = "https://www.googleapis.com/books/v1/volumes?q=";
     private android.widget.SearchView mSearchView;
     private SpinKitView spinKitView;
     RecyclerView recyclerView;

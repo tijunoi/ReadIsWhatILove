@@ -26,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        android.support.v7.widget.Toolbar appbar = (android.support.v7.widget.Toolbar) findViewById(R.id.appbar);
+       /* android.support.v7.widget.Toolbar appbar = (android.support.v7.widget.Toolbar) findViewById(R.id.appbar);
         setSupportActionBar(appbar);
 
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("Home");*/
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigationbar);
 
@@ -57,6 +57,18 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        if (savedInstanceState == null){
+            mFragmentStateManager.changeFragment(0);
+        }
+
+       /* bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int position = getNavPositionFromMenuItem(item);
+                if position != position
+            }
+        });
+*/
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -95,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
                             //bottomNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
                             //item.setChecked(true);}
-                            getSupportActionBar().setTitle(item.getTitle());
+                            //getSupportActionBar().setTitle(item.getTitle());
 
 
                         return true;

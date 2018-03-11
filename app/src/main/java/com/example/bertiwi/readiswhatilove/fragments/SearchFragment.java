@@ -87,7 +87,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     public void getVolumes(){
 
-        StringRequest stringRequest1 = new StringRequest(Request.Method.POST, VOLUMES_URL,
+        StringRequest stringRequest1 = new StringRequest(Request.Method.GET, VOLUMES_URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

@@ -55,6 +55,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (account != null){
             Intent intent = new Intent(this, SplashScreenActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -93,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("YAYAYAYA", "signInResult:failed code=" + e.getStatusCode());
+            Log.d("QUEMAL", e.getMessage());
             Snackbar.make(findViewById(R.id.login_layout_content), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
 
             updateUI(null);

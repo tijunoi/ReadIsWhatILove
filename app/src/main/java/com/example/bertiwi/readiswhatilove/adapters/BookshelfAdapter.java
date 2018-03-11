@@ -2,6 +2,7 @@ package com.example.bertiwi.readiswhatilove.adapters;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,8 @@ public class BookshelfAdapter extends RecyclerView.Adapter<BookshelfAdapter.Book
             super(itemView);
             mCardView = itemView.findViewById(R.id.home_bookshelf_cardview);
             mRecyclerView = itemView.findViewById(R.id.home_bookshelf_book_recyclerview);
+
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL,false));
         }
 
         public void bindData(Bookshelf bookshelf){

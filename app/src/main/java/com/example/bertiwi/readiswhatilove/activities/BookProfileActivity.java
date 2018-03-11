@@ -1,7 +1,9 @@
 package com.example.bertiwi.readiswhatilove.activities;
 
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,8 +32,11 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.OkHttpClient;
 
 public class BookProfileActivity extends AppCompatActivity {
 
@@ -78,7 +83,7 @@ public class BookProfileActivity extends AppCompatActivity {
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                requestRemoveMethod();
+               requestRemoveMethod();
             }
         });
 
@@ -112,8 +117,9 @@ public class BookProfileActivity extends AppCompatActivity {
         ratingBar.setRating(Float.parseFloat(book.getAverageRating().toString()));
     }
 
+
     public void requestAddMethod() {
-        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, ADD_URL,
+        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, ADD_URL+"?VOLUMEID=" + book.getId(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -129,17 +135,10 @@ public class BookProfileActivity extends AppCompatActivity {
                 }) {
 
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("shelf", "0");
-                params.put("volumeId", book.getId());
-                return params;
-            }
-
-            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + SharedPrefManager.getInstance(getApplicationContext()).getToken());
+                headers.put("Accept","application/json");
                 return headers;
             }
         };
@@ -147,13 +146,17 @@ public class BookProfileActivity extends AppCompatActivity {
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest2);
     }
 
+
+
     public void requestRemoveMethod() {
-        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, REMOVE_URL,
+
+
+        StringRequest stringRequest2 = new StringRequest(Request.Method.POST, REMOVE_URL+"?VOLUMEID=" + book.getId(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "Libro eliminado de favoritos", Toast.LENGTH_SHORT).show();
-                        Log.d("----------ASDASAGENDA", response);
+                        Log.d("Info", response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -164,22 +167,17 @@ public class BookProfileActivity extends AppCompatActivity {
                 }) {
 
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("shelf", "0");
-                params.put("volumeId", book.getId());
-                return params;
-            }
-            @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Authorization", "Bearer " + SharedPrefManager.getInstance(getApplicationContext()).getToken());
+                headers.put("Accept","application/json");
                 return headers;
             }
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest2);
     }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

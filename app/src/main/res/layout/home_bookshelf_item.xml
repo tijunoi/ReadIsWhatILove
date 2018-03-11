@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/home_bookshelf_cardview"
-    android:layout_height="240dp"
+    android:layout_height="300dp"
     card_view:cardCornerRadius="2dp"
     android:layout_width="match_parent"
     android:descendantFocusability="blocksDescendants"
@@ -14,6 +14,15 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/home_bookshelf_title_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Aventuras"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:textAllCaps="true"
+                    android:layout_margin="10dp"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/home_bookshelf_book_recyclerview"
                     android:layout_width="match_parent"

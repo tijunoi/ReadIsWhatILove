@@ -20,7 +20,7 @@
         <ImageView
             android:id="@+id/book_cover_imageview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
             card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView

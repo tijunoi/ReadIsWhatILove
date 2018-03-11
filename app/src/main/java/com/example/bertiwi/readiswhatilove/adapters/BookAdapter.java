@@ -1,5 +1,6 @@
 package com.example.bertiwi.readiswhatilove.adapters;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,10 @@ import java.util.ArrayList;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewholder> {
 
     private ArrayList<Book> mBookArrayList;
+
+    public BookAdapter(ArrayList<Book> bookArrayList) {
+        mBookArrayList = bookArrayList;
+    }
 
     @NonNull
     @Override
@@ -60,8 +65,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewholder
             //TODO: bindear datos a la view
             //TODO: load image
             mTitleTextView.setText(book.getTitle());
-            //TODO: falta el autor, fer quan Berta actualitzi model
-            //mAuthorTextView.setText(book.getAuthor());
+            mAuthorTextView.setText(book.getAuthor());
+
+            //TODO: falta la imatge, fer quan Berta actualitzi model
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                mCoverImageView.setBackgroundColor(mCardView.getContext().getColor(R.color.colorAccent));
+            } else {
+                mCoverImageView.setBackgroundColor(mCardView.getContext().getResources().getColor(R.color.colorAccent));
+            }
             /*
 
         <ImageView

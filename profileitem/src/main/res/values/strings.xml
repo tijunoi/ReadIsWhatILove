@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ProfileItem</string>
+    <string name="cerrar_session_button">Cerrar sessión</string>
+</resources>

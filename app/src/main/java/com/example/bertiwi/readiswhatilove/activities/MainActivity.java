@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigationbar);
 
-        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.content_frame, new HomeFragment());
-        tx.commit();
-
         //Mantenir estat dels fragments
         FrameLayout content = findViewById(R.id.content_frame);
 

@@ -45,6 +45,7 @@ public class BookRecycler extends RecyclerView.Adapter<BookRecycler.BookViewHold
 
         public BookViewHolder(View itemView) {
             super(itemView);
+            image = itemView.findViewById(R.id.image_book_profile);
             title = itemView.findViewById(R.id.title_book_profile);
             autor = itemView.findViewById(R.id.autor_book_profile);
         }

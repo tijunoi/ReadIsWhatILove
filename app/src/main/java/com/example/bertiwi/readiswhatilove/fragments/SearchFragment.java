@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private BookRecycler adapter;
 
     private String finalQuery;
+
+    private ImageView emptyStar, selectedStar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -155,25 +158,35 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         String kind = jsonObject.getString("kind");
         int totalItems = jsonObject.getInt("totalItems");
-        JSONArray jsonArray = new JSONArray("items");
+        JSONArray jsonArray = new JSONArray(jsonObject.getString("items"));
 
-        Book book = new Book();
 
         for (int i = 0; i < jsonArray.length(); i++) {
+            Book book = new Book();
             JSONObject datosBook = jsonArray.getJSONObject(i);
             String id = datosBook.getString("id");
-            book.setId(id);
-            JSONArray volumeInfo = new JSONArray("volumeInfo");
+            JSONObject volumeInfo = new JSONObject(datosBook.getString("volumeInfo"));
+            String title = volumeInfo.getString("title");
+            JSONArray authors = new JSONArray(volumeInfo.optString("authors"));
+            String author = String.valueOf(authors.get(0));
+            String published = volumeInfo.optString("publisher");
+            String publishedDate = volumeInfo.optString("publishedDate");
+            String description = volumeInfo.optString("description");
+            Double averageRating = volumeInfo.optDouble("averageRating");
+            JSONObject imageLinks = new JSONObject(volumeInfo.optString("imageLinks"));
+            String image = imageLinks.optString("thumbnail");
+            //String image = String.valueOf(imageLinks.get(0));
+            /*JSONArray volumeInfo = new JSONArray(datosBook.getString("volumeInfo"));
             for (int j = 0; j < volumeInfo.length(); j++) {
                 JSONObject volumeInfoObject = volumeInfo.getJSONObject(j);
                 String title = volumeInfoObject.getString("title");
-                JSONArray authors = new JSONArray("authors");
+                JSONArray authors = new JSONArray(volumeInfoObject.getString("authors"));
                 String author = String.valueOf(authors.get(0));
                 String published = volumeInfoObject.getString("publisher");
                 String publishedDate = volumeInfoObject.getString("publishedDate");
                 String description = volumeInfoObject.getString("description");
                 Double averageRating = volumeInfoObject.getDouble("averageRating");
-                JSONArray imageLinks = new JSONArray("imageLinks");
+                JSONArray imageLinks = new JSONArray(volumeInfoObject.getString("imageLinks"));
                 String image = String.valueOf(imageLinks.get(0));
 
                 book.setTitle(title);
@@ -184,17 +197,30 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                 book.setAverageRating(averageRating);
                 book.setImage(image);
 
-            }
+            }*/
+
+            book.setId(id);
+            book.setTitle(title);
+            book.setAuthor(author);
+            book.setPublisher(published);
+            book.setPublishedDate(publishedDate);
+            book.setDescription(description);
+            book.setAverageRating(averageRating);
+            book.setImage(image);
 
             bookArrayList.add(book);
 
         }
+
+
+
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         finalQuery = query;
         if (!finalQuery.isEmpty()) {
+            spinKitView.setVisibility(View.VISIBLE);
             new getVolumes().execute();
         } else {
             Toast.makeText(getContext(), "ESTO NO VA COÑO", Toast.LENGTH_SHORT).show();
@@ -204,7 +230,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        adapter.filter(newText);
         return false;
     }
 }

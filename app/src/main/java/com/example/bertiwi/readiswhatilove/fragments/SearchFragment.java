@@ -50,7 +50,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private String finalQuery;
 
-    private ImageView emptyStar, selectedStar;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -219,14 +218,13 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         }
 
-
-
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
         finalQuery = query;
         if (!finalQuery.isEmpty()) {
+            bookArrayList.clear();
             spinKitView.setVisibility(View.VISIBLE);
             new getVolumes().execute();
         } else {

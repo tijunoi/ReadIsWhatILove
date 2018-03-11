@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -33,9 +34,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mProgressBar = findViewById(R.id.login_progresbar);
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        Scope scope = new Scope("https://www.googleapis.com/auth/books");
+
+        String clientId = "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com";
+
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
+                .requestIdToken(clientId)
+                .requestScopes(scope)
                 .build();
+
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -87,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-
+            account.getIdToken();
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {

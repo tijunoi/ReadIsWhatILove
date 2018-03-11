@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.activities.SplashScreenActivity;
+import com.example.bertiwi.readiswhatilove.utilities.SharedPrefManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -95,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            account.getIdToken();
+            SharedPrefManager.getInstance(this).setToken(account.getIdToken());
             // Signed in successfully, show authenticated UI.
             updateUI(account);
         } catch (ApiException e) {

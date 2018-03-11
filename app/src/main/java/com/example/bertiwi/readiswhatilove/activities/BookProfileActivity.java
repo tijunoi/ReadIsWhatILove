@@ -14,6 +14,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -21,8 +22,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.fragments.SearchFragment;
 import com.example.bertiwi.readiswhatilove.model.Book;
+import com.example.bertiwi.readiswhatilove.utilities.SharedPrefManager;
 import com.example.bertiwi.readiswhatilove.utilities.VolleySingleton;
 import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -67,11 +70,18 @@ public class BookProfileActivity extends AppCompatActivity {
         likeButton = findViewById(R.id.heart_button);
         ratingBar = findViewById(R.id.ratingBar);
 
-        if (likeButton.isLiked()){
-            requestAddMethod();
-        }else{
-            requestRemoveMethod();
-        }
+        likeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                requestAddMethod();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                requestRemoveMethod();
+            }
+        });
+
 
         Picasso.with(getApplicationContext())
                 .load(book.getImage())
@@ -125,6 +135,13 @@ public class BookProfileActivity extends AppCompatActivity {
                 params.put("volumeId", book.getId());
                 return params;
             }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + SharedPrefManager.getInstance(getApplicationContext()).getToken());
+                return headers;
+            }
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(stringRequest2);
@@ -152,6 +169,12 @@ public class BookProfileActivity extends AppCompatActivity {
                 params.put("shelf", "0");
                 params.put("volumeId", book.getId());
                 return params;
+            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + SharedPrefManager.getInstance(getApplicationContext()).getToken());
+                return headers;
             }
         };
 

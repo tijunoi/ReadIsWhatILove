@@ -1,6 +1,7 @@
 package com.example.bertiwi.readiswhatilove.fragments;
 
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.bertiwi.readiswhatilove.R;
+import com.example.bertiwi.readiswhatilove.activities.BookProfileActivity;
 import com.example.bertiwi.readiswhatilove.adapters.BookRecycler;
 import com.example.bertiwi.readiswhatilove.model.Book;
 import com.example.bertiwi.readiswhatilove.utilities.SimpleDividerItemDecoration;
@@ -40,7 +42,9 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private SpinKitView spinKitView;
     RecyclerView recyclerView;
     private ArrayList<Book> bookArrayList = new ArrayList<>();
-    private String responseStr;
+
+
+    public static final String SELECTED_BOOK= "BOOK SELECCIONADO";
 
     private BookRecycler adapter;
 
@@ -54,7 +58,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragmentç
         View v = inflater.inflate(R.layout.fragment_search, container, false);
@@ -75,7 +79,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         adapter = new BookRecycler(bookArrayList, getContext(), new BookRecycler.OnItemClickListener() {
             @Override
             public void onItemClick(Book book) {
-                Toast.makeText(getContext(), "Book clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(), BookProfileActivity.class);
+                intent.putExtra(SELECTED_BOOK, book);
+                startActivity(intent);
+
             }
         });
 

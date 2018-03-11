@@ -1,7 +1,6 @@
 package com.example.bertiwi.readiswhatilove.fragments;
 
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,14 +15,7 @@ import com.example.bertiwi.readiswhatilove.adapters.BookshelfAdapter;
 import com.example.bertiwi.readiswhatilove.model.Book;
 import com.example.bertiwi.readiswhatilove.model.Bookshelf;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,37 +69,5 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private class getVolumes extends AsyncTask<String, String, String> {
 
-        @Override
-        protected String doInBackground(String... params) {
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(VOLUMES_URL + finalQuery + "&maxResults=10&printType=books")
-                    .build();
-            Response response = null;
-            try {
-                response = client.newCall(request).execute();
-                String responseStr = response.body().string();
-                try {
-                    parseJSONVolumes(responseStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (isAdded() && getActivity() != null) {
-                adapter.notifyDataSetChanged();
-                spinKitView.setVisibility(View.GONE);
-            }
-        }
-    }
 }

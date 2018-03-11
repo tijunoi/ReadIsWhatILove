@@ -33,38 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigationbar);
 
-        //Mantenir estat dels fragments
-        FrameLayout content = findViewById(R.id.content_frame);
-
-        mFragmentStateManager = new FragmentStateManager(content, getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int i) {
-                switch (i){
-                    case 0:
-                        return new HomeFragment();
-                    case 1:
-                        return new SearchFragment();
-                    case 2:
-                        return new StarredFragment();
-                    case 3:
-                        return new SettingsFragment();
-                }
-                return null;
-            }
-        };
-
-        if (savedInstanceState == null){
-            mFragmentStateManager.changeFragment(0);
-        }
-
-       /* bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int position = getNavPositionFromMenuItem(item);
-                if position != position
-            }
-        });
-*/
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        tx.replace(R.id.content_frame, new HomeFragment());
+        tx.commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener
                 (new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -76,38 +47,39 @@ public class MainActivity extends AppCompatActivity {
 
                         switch (item.getItemId()) {
                             case R.id.action_home:
-                                /*selectedFragment = new HomeFragment();
-                                fragmentTransaction = true;*/
-                                mFragmentStateManager.changeFragment(0);
+                                selectedFragment = new HomeFragment();
+                                fragmentTransaction = true;
                                 break;
                             case R.id.action_search:
-                                /*selectedFragment = new SearchFragment();
-                                fragmentTransaction = true;*/
-                                mFragmentStateManager.changeFragment(1);
+                                //Intent intent = new Intent(MainActivity.this, AcreditarActivity.class);
+                                //startActivity(intent);
+                                selectedFragment = new SearchFragment();
+                                fragmentTransaction = true;
                                 break;
                             case R.id.action_starred:
-                      /*          selectedFragment = new StarredFragment();
+                                //Intent intent= new Intent(MainActivity.this, ScanAttendeeActivity.class);
+                                //startActivity(aboutIntent);
+                                selectedFragment = new StarredFragment();
                                 fragmentTransaction = true;
-                      */          mFragmentStateManager.changeFragment(2);
                                 break;
                             case R.id.action_settings:
-                                /*selectedFragment = new SettingsFragment();
-                                fragmentTransaction = true;*/
-                                mFragmentStateManager.changeFragment(3);
+                                selectedFragment = new SettingsFragment();
+                                fragmentTransaction = true;
                                 break;
                         }
-                        /*if (fragmentTransaction){
+                        if (fragmentTransaction) {
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_frame, selectedFragment)
-                                    .commit();*/
+                                    .commit();
 
                             //bottomNavigationView.setItemIconTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorWhite)));
-                            //item.setChecked(true);}
+                            //item.setChecked(true);
                             //getSupportActionBar().setTitle(item.getTitle());
-
+                        }
 
                         return true;
                     }
                 });
+
     }
 }

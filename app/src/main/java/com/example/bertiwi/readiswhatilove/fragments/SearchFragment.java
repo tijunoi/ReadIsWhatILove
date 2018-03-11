@@ -1,36 +1,33 @@
 package com.example.bertiwi.readiswhatilove.fragments;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.adapters.BookRecycler;
 import com.example.bertiwi.readiswhatilove.model.Book;
 import com.example.bertiwi.readiswhatilove.utilities.SimpleDividerItemDecoration;
-import com.example.bertiwi.readiswhatilove.utilities.VolleySingleton;
 import com.github.ybq.android.spinkit.SpinKitView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +39,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private SpinKitView spinKitView;
     RecyclerView recyclerView;
     private ArrayList<Book> bookArrayList = new ArrayList<>();
+    private String responseStr;
 
     private BookRecycler adapter;
 
@@ -85,7 +83,40 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         return v;
     }
 
-    public void getVolumes(){
+    private class getVolumes extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(VOLUMES_URL + finalQuery + "&maxResults=10&printType=books")
+                    .build();
+            Response response = null;
+            try {
+                response = client.newCall(request).execute();
+                String responseStr = response.body().string();
+                try {
+                    parseJSONVolumes(responseStr);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (isAdded() && getActivity() != null) {
+                adapter.notifyDataSetChanged();
+                spinKitView.setVisibility(View.GONE);
+            }
+        }
+    }
+    /*public void getdfsVolumes(){
 
         StringRequest stringRequest1 = new StringRequest(Request.Method.GET, VOLUMES_URL,
                 new Response.Listener<String>() {
@@ -117,7 +148,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest1);
 
-    }
+    }*/
 
     public void parseJSONVolumes(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
@@ -162,10 +193,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        finalQuery=query;
-        if (!finalQuery.isEmpty()){
-            getVolumes();
-        }else {
+        finalQuery = query;
+        if (!finalQuery.isEmpty()) {
+            new getVolumes().execute();
+        } else {
             Toast.makeText(getContext(), "ESTO NO VA COÑO", Toast.LENGTH_SHORT).show();
         }
         return false;

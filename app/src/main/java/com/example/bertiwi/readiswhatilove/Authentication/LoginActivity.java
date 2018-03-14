@@ -1,6 +1,9 @@
 package com.example.bertiwi.readiswhatilove.Authentication;
 
+import android.accounts.Account;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import com.example.bertiwi.readiswhatilove.BuildConfig;
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.activities.SplashScreenActivity;
 import com.example.bertiwi.readiswhatilove.utilities.SharedPrefManager;
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -20,7 +24,12 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
+import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.Collections;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -36,14 +45,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         mProgressBar = findViewById(R.id.login_progresbar);
 
-        Scope scope = new Scope("https://www.googleapis.com/auth/books");
+        Scope SCOPE_BOOKS = new Scope("https://www.googleapis.com/auth/books");
 
         String clientId = "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com";
 
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .requestIdToken(clientId)
-                .requestScopes(scope)
+                .requestScopes(SCOPE_BOOKS)
                 .build();
 
 
@@ -96,9 +105,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
+
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            SharedPrefManager.getInstance(this).setToken(account.getIdToken());
+            new GetContactsTask(this).execute();
             // Signed in successfully, show authenticated UI.
+
             updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
@@ -108,6 +119,66 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Snackbar.make(findViewById(R.id.login_layout_content), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
 
             updateUI(null);
+        }
+    }
+
+    private static class GetContactsTask extends AsyncTask<Void, Void, Void> {
+
+        WeakReference<Context> mContextReference;
+
+        public GetContactsTask(Context context) {
+            mContextReference = new WeakReference<Context>(context);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            //try {
+                GoogleAccountCredential credential =
+                        GoogleAccountCredential.usingOAuth2(
+                                mContextReference.get(),
+                                Collections.singleton(
+                                        "https://www.googleapis.com/auth/books")
+                        );
+
+            try {
+                SharedPrefManager.getInstance(mContextReference.get()).setToken(credential.getToken());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (GoogleAuthException e) {
+                e.printStackTrace();
+            }
+
+                /*People service = new People.Builder(HTTP_TRANSPORT, JSON_FACTORY, credential)
+                        .setApplicationName("REST API sample")
+                        .build();
+                ListConnectionsResponse connectionsResponse = service
+                        .people()
+                        .connections()
+                        .list("people/me")
+                        .execute();
+                result = connectionsResponse.getConnections();
+            } catch (UserRecoverableAuthIOException userRecoverableException) {
+                // Explain to the user again why you need these OAuth permissions
+                // And prompt the resolution to the user again:
+                startActivityForResult(userRecoverableException.getIntent(),RC_REAUTHORIZE);
+            } catch (IOException e) {
+                // Other non-recoverable exceptions.
+            }*/
+
+            return null;
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+
+        @Override
+        protected void onPostExecute(Void connections) {
+            if (mContextReference != null) {
+                mContextReference.clear();
+                mContextReference = null;
+            }
         }
     }
 }

@@ -83,6 +83,7 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
             }
         });
 
+
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
@@ -103,12 +104,13 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
         return false;
     }
 
-    private class GetBookShelf extends AsyncTask<String, String, String> {
+     private class GetBookShelf extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
+                    .addHeader("Authorization","Bearer " + SharedPrefManager.getInstance(getContext()).getToken())
                     .url(BOOKSHELF_URL)
                     .build();
             Response response = null;

@@ -1,10 +1,13 @@
 package com.example.bertiwi.readiswhatilove.Authentication;
 
+import android.Manifest;
 import android.accounts.Account;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,6 +47,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        switch (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS)) {
+            case PackageManager.PERMISSION_GRANTED:
+                break;
+        }
 
         mProgressBar = findViewById(R.id.login_progresbar);
 
@@ -113,7 +121,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 public void onTaskCompleted() {
                     updateUI(account);
                 }
-            }).execute();
+            },account.getAccount()).execute();
 
 
             // Signed in successfully, show authenticated UI.
@@ -138,10 +146,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         OnTaskCompleted listener = null;
 
         WeakReference<Context> mContextReference;
+        Account mAccount;
 
-        public GetContactsTask(Context context, OnTaskCompleted listener) {
+        public GetContactsTask(Context context, OnTaskCompleted listener, Account account) {
             mContextReference = new WeakReference<Context>(context);
             this.listener = listener;
+            this.mAccount = account;
         }
 
         @Override
@@ -153,7 +163,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 Collections.singleton(
                                         "https://www.googleapis.com/auth/books")
                         );
-
+                credential.setSelectedAccount(mAccount);
             try {
                 SharedPrefManager.getInstance(mContextReference.get()).setToken(credential.getToken());
             } catch (IOException e) {

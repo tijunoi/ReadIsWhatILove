@@ -170,7 +170,9 @@ public class BookProfileActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + SharedPrefManager.getInstance(getApplicationContext()).getToken());
+                String token = SharedPrefManager.getInstance(getApplicationContext()).getToken();
+                System.out.println(token);
+                headers.put("Authorization", "Bearer " + token);
                 headers.put("Accept","application/json");
                 return headers;
             }

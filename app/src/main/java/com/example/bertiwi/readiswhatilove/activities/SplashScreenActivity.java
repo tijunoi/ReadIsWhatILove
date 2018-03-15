@@ -39,7 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }, SPLASH_TIME_OUT);
 
-        /*OkHttpClient client = new OkHttpClient();
+       /* OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new FormBody.Builder()
                 .add("grant_type", "http://oauth.net/grant_type/device/1.0")
                 .add("client_id", "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com")

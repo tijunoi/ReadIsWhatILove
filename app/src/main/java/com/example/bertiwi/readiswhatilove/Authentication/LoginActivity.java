@@ -31,12 +31,14 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Collections;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
     private GoogleSignInClient mGoogleSignInClient;
 
     private static final int RC_SIGN_IN = 3243;
     private ProgressBar mProgressBar;
+    private GoogleSignInAccount account;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +107,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
+            account = completedTask.getResult(ApiException.class);
+            new GetContactsTask(this, new GetContactsTask.OnTaskCompleted() {
+                @Override
+                public void onTaskCompleted() {
+                    updateUI(account);
+                }
+            }).execute();
 
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            new GetContactsTask(this).execute();
+
             // Signed in successfully, show authenticated UI.
 
-            updateUI(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -124,10 +131,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private static class GetContactsTask extends AsyncTask<Void, Void, Void> {
 
+        public interface OnTaskCompleted{
+            void onTaskCompleted();
+        }
+
+        OnTaskCompleted listener = null;
+
         WeakReference<Context> mContextReference;
 
-        public GetContactsTask(Context context) {
+        public GetContactsTask(Context context, OnTaskCompleted listener) {
             mContextReference = new WeakReference<Context>(context);
+            this.listener = listener;
         }
 
         @Override
@@ -179,6 +193,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mContextReference.clear();
                 mContextReference = null;
             }
+            listener.onTaskCompleted();
         }
     }
 }

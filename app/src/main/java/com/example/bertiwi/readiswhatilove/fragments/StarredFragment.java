@@ -16,6 +16,7 @@ import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.activities.BookProfileActivity;
 import com.example.bertiwi.readiswhatilove.adapters.BookRecycler;
 import com.example.bertiwi.readiswhatilove.model.Book;
+import com.example.bertiwi.readiswhatilove.utilities.SharedPrefManager;
 import com.example.bertiwi.readiswhatilove.utilities.SimpleDividerItemDecoration;
 import com.github.ybq.android.spinkit.SpinKitView;
 
@@ -80,9 +81,12 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
             }
         });
 
+
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+
+        new GetBookShelf().execute();
 
         return v;
     }
@@ -98,12 +102,13 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
         return false;
     }
 
-    private class GetBookShelf extends AsyncTask<String, String, String> {
+     private class GetBookShelf extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... params) {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
+                    .addHeader("Authorization","Bearer " + SharedPrefManager.getInstance(getContext()).getToken())
                     .url(BOOKSHELF_URL)
                     .build();
             Response response = null;

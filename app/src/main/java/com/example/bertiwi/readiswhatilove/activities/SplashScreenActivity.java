@@ -28,7 +28,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        /*int SPLASH_TIME_OUT = 3000;
+        int SPLASH_TIME_OUT = 3000;
         new Handler().postDelayed(new Runnable() {
 
             @Override
@@ -37,9 +37,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-        }, SPLASH_TIME_OUT);*/
+        }, SPLASH_TIME_OUT);
 
-        OkHttpClient client = new OkHttpClient();
+       /* OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = new FormBody.Builder()
                 .add("grant_type", "http://oauth.net/grant_type/device/1.0")
                 .add("client_id", "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com")
@@ -67,6 +67,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
     }
 }

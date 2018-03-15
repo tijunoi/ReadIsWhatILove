@@ -20,6 +20,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.fragments.SearchFragment;
@@ -31,6 +32,7 @@ import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -78,7 +80,8 @@ public class BookProfileActivity extends AppCompatActivity {
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                requestAddMethod();
+                //requestAddMethod();
+                addMethod();
             }
 
             @Override
@@ -117,6 +120,36 @@ public class BookProfileActivity extends AppCompatActivity {
         ratingBar.setRating(Float.parseFloat(book.getAverageRating().toString()));
     }
 
+    public void addMethod(){
+        JSONObject parameters = new JSONObject();
+        try {
+            parameters.put("volumeId", book.getId());
+        } catch (Exception e) {
+        }
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, ADD_URL , parameters,new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("onResponse", response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("onErrorResponse", error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                // Basic Authentication
+                //String auth = "Basic " + Base64.encodeToString(CONSUMER_KEY_AND_SECRET.getBytes(), Base64.NO_WRAP);
+
+                headers.put("Authorization", "Bearer " + SharedPrefManager.getInstance(getApplicationContext()).getToken());
+                headers.put("Accept","application/json");
+                return headers;
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(request);
+    }
 
     public void requestAddMethod() {
         StringRequest stringRequest2 = new StringRequest(Request.Method.POST, ADD_URL+"?VOLUMEID=" + book.getId(),

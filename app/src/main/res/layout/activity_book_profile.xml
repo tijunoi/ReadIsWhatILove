@@ -8,7 +8,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
 
         tools:context="com.example.bertiwi.readiswhatilove.activities.BookProfileActivity">
 
@@ -17,7 +17,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:elevation="4dp"
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/Theme.AppCompat.Light" />
@@ -50,37 +49,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:gravity="center_horizontal"
-                android:text="amdamdsada" />
+                android:gravity="center_horizontal" />
 
             <TextView
                 android:id="@+id/profile_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="nom"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/profile_autor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="autor" />
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:id="@+id/profile_publisher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="publisher" />
+                android:layout_marginTop="16dp" />
 
             <TextView
                 android:id="@+id/profile_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="date" />
+                />
 
 
             <RatingBar
@@ -88,13 +83,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:isIndicator="true"/>
+                android:isIndicator="true" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Añade este libro a favoritos" />
+                android:text="@string/add_favoritos" />
 
             <com.like.LikeButton
                 android:id="@+id/heart_button"

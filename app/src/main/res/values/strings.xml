@@ -11,4 +11,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="clientID">426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com</string>
+    <string name="add_favoritos">Añade este libro a favoritos</string>
+    <string name="bienvenido">Bienvenido a Read Is What I Love!   Para continuar, necesitamos acceso a tu cuenta de Google. Pulsa el botón de abajo para empezar a explorar libros.</string>
+    <string name="explicacion_login">Read Is What I Love utiliza tu cuenta de Google para guardar tus libros favoritos.</string>
+    <string name="titulo_app">Read is what I Love</string>
+    <string name="portada_book">portada_book</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="starred">Starred</string>
+    <string name="settings">Settings</string>
 </resources>

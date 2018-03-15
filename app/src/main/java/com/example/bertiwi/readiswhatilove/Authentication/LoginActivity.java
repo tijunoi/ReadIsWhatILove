@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         Scope SCOPE_BOOKS = new Scope("https://www.googleapis.com/auth/books");
 
-        String clientId = "426405697865-luhj6dst71rbmml1ne5gldnebk4u1ksc.apps.googleusercontent.com";
+        String clientId = getString(R.string.clientID);
 
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

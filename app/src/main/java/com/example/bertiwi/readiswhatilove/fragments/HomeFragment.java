@@ -15,6 +15,7 @@ import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.adapters.BookshelfAdapter;
 import com.example.bertiwi.readiswhatilove.model.Book;
 import com.example.bertiwi.readiswhatilove.model.Bookshelf;
+import com.github.ybq.android.spinkit.SpinKitView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,7 @@ public class HomeFragment extends Fragment {
 
 
     private RecyclerView mRecyclerView;
+    private SpinKitView spinKitView;
     private ArrayList<Bookshelf> mBookshelfArrayList;
     private BookshelfAdapter mBookshelfAdapter;
 
@@ -50,7 +52,9 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         mRecyclerView = view.findViewById(R.id.home_bookshelf_recyclerview);
+        spinKitView = view.findViewById(R.id.spin_kit_home);
 
+        spinKitView.setVisibility(View.VISIBLE);
         ArrayList<Book> librus = new ArrayList<>();
 
         Bookshelf bookshelf1 = new Bookshelf("Adventure",new ArrayList<Book>());
@@ -114,6 +118,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
+            spinKitView.setVisibility(View.GONE);
             mBookshelfAdapter.notifyDataSetChanged();
         }
     }

@@ -10,7 +10,8 @@
         android:layout_width="130dp"
         android:layout_height="180dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_book_profile" />
+        app:layout_constraintTop_toBottomOf="@id/title_book_profile"
+        android:contentDescription="@string/portada_book" />
 
     <TextView
         android:id="@+id/title_book_profile"
@@ -18,7 +19,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Nom"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/image_book_profile"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:text="Autor"
         app:layout_constraintStart_toEndOf="@id/image_book_profile"
         app:layout_constraintTop_toBottomOf="@id/title_book_profile" />
 

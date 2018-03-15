@@ -4,6 +4,7 @@ package com.example.bertiwi.readiswhatilove.fragments;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.service.voice.VoiceInteractionSessionService;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,7 @@ import com.example.bertiwi.readiswhatilove.R;
 import com.example.bertiwi.readiswhatilove.activities.BookProfileActivity;
 import com.example.bertiwi.readiswhatilove.adapters.BookRecycler;
 import com.example.bertiwi.readiswhatilove.model.Book;
+import com.example.bertiwi.readiswhatilove.utilities.SharedPrefManager;
 import com.example.bertiwi.readiswhatilove.utilities.SimpleDividerItemDecoration;
 import com.github.ybq.android.spinkit.SpinKitView;
 
@@ -37,7 +39,7 @@ import static com.example.bertiwi.readiswhatilove.fragments.SearchFragment.SELEC
  */
 public class StarredFragment extends Fragment implements SearchView.OnQueryTextListener {
 
-    private static String BOOKSHELF_URL = "https://www.googleapis.com/books/v1/mylibrary/bookshelves/0/volumes";
+    private String BOOKSHELF_URL = "https://www.googleapis.com/books/v1/mylibrary/bookshelves/0/volumes";
     private android.widget.SearchView mSearchView;
     private SpinKitView spinKitView;
     RecyclerView recyclerView;
@@ -61,6 +63,7 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
         spinKitView = v.findViewById(R.id.spin_kit_cargando);
         recyclerView = v.findViewById(R.id.recV_BookShelf);
 
+        spinKitView.setVisibility(View.VISIBLE);
         mSearchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +86,8 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
         recyclerView.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
+
+        new GetBookShelf().execute();
 
         return v;
     }
@@ -111,7 +116,7 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
                 response = client.newCall(request).execute();
                 String responseStr = response.body().string();
                 try {
-                    parseJSONVolumes(responseStr);
+                    parseJSONBookshelfs(responseStr);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -132,7 +137,8 @@ public class StarredFragment extends Fragment implements SearchView.OnQueryTextL
         }
     }
 
-    public void parseJSONVolumes(String response) throws JSONException {
+
+    public void parseJSONBookshelfs(String response) throws JSONException {
         JSONObject jsonObject = new JSONObject(response);
 
         String kind = jsonObject.getString("kind");

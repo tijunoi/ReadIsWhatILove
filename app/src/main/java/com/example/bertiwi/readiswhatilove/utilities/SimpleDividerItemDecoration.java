@@ -16,10 +16,20 @@ import com.example.bertiwi.readiswhatilove.R;
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
+    /**
+     * Contexto de la activity donde se usará la clase.
+     * @param context contexto de la activity actual
+     */
     public SimpleDividerItemDecoration(Context context){
         mDivider = ContextCompat.getDrawable(context, R.drawable.line_divider);
     }
 
+    /**
+     *
+     * @param c Canvas para dibujar
+     * @param parent RecyclerView dónde dibujará el ItemDecoration
+     * @param state Estado actual del RecyclerView
+     */
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state){
         int left = parent.getPaddingLeft();
         int right = parent.getWidth() - parent.getPaddingRight();

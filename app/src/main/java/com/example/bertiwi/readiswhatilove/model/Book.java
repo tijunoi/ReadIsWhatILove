@@ -47,7 +47,7 @@ public class Book implements Parcelable{
     }
 
     /**
-     * Parcelable implementation
+     * {@link Parcelable} implementation
      * @param in
      */
     protected Book(Parcel in) {

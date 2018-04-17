@@ -3,16 +3,16 @@ package com.example.bertiwi.readiswhatilove.model;
 import java.util.ArrayList;
 
 /**
- * Created by Nil Ordoñez on 7/3/18.
+ * Modelo bookshelf que sirve para almacenar los {@link Book} que se obtienen de Google Books API.
+ * @author Nil Ordoñez
  */
-
 public class Bookshelf {
     private String title;
     private ArrayList<Book> mBookArrayList;
 
 
     /**
-     *
+     *Constructor de la clase bookshelf. Se le tiene que proporcional la array de {@link ArrayList<Book>} creada previamente.
      * @param title Titulo de la colección de libros.
      * @param bookArrayList Conjunto de libros que forman la colección.
      */

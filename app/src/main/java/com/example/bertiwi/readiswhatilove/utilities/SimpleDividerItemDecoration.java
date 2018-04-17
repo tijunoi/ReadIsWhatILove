@@ -10,9 +10,10 @@ import android.view.View;
 import com.example.bertiwi.readiswhatilove.R;
 
 /**
- * Created by Bertiwi on 07/03/2018.
+ * Custom item decoration para el {@link RecyclerView} de {@link com.example.bertiwi.readiswhatilove.model.Book}
+ *
+ * @author Bertiwi
  */
-
 public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
     private Drawable mDivider;
 
@@ -25,6 +26,7 @@ public class SimpleDividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     /**
+     * Metodo para dibujar el custom divider
      *
      * @param c Canvas para dibujar
      * @param parent RecyclerView dónde dibujará el ItemDecoration

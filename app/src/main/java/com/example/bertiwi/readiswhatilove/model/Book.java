@@ -6,11 +6,11 @@ import android.os.Parcelable;
 import java.sql.Date;
 
 /**
- * Created by Bertiwi on 28/02/2018.
+ * Modelo de entidad de un Libro. Puede estar embedido en un {@link Bookshelf}.
+ * Es una data class. Contiene toda la información que necesita la app, del modelo Book de Google Books API
+ *
+ * @author Nil Ordoñez
  */
-
-
-
 public class Book implements Parcelable{
     private String id;
     private String title;
@@ -209,8 +209,7 @@ public class Book implements Parcelable{
 
     /**
      *
-     * @return
-    una máscara de bits que indica el conjunto de tipos de objetos especiales ordenados por esta instancia de objeto Parcelable.
+     * @return  una máscara de bits que indica el conjunto de tipos de objetos especiales ordenados por esta instancia de objeto Parcelable.
      */
     @Override
     public int describeContents() {
@@ -219,10 +218,9 @@ public class Book implements Parcelable{
 
 
     /**
-     *
+     * Indicadores adicionales sobre cómo se debe escribir el objeto.
      * @param dest el Parcel en el que se debe escribir el objeto.
      * @param flags
-    Indicadores adicionales sobre cómo se debe escribir el objeto.
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
